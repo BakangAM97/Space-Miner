@@ -1,13 +1,14 @@
 $(document).ready(function(){
 
-var player = $(".player")
-var board = $(".container")
+var player = $(".player");
+var board = $(".container");
+var lifeCounter = $("lifeCounter")
 var lives = 3;
 var playerXpos = 400;
 var playerYpos = 250;
 var keyPress=[]
 var speed = 3;
-console.log();
+$("#lives").html(lives);
 
 //Find left and top edge of the board
 var boardLeft = board.offset().left;
@@ -26,7 +27,7 @@ $(document).keyup(function(event){
 
 movePlayer();
 addDiv();
-// checkSafe();
+checkSafe();
 
 
 
@@ -82,27 +83,83 @@ function movePlayer() {
 function addDiv() {
   var x = Math.floor(Math.random()*(board.width() -30));
   var y = Math.floor(Math.random()*(board.height() -30));
-  console.log(x);
-  console.log(y);
-  $(".container").append("<div class = 'newdiv'></div>")
+  $(".container").append("<div class = 'newdiv'></div>");
   $(".newdiv").css({
     "top": y + "px",
     "left": x + "px"
   })
   $(".newdiv").addClass("add-animation");
 
-  var repeat  = setTimeout(addDiv,3300);
+  var repeat  = setTimeout(addDiv,3000);
   var remove = setTimeout(function(){
     $(".newdiv").remove();
-  },2000);
+  },2990);
 
 }
 
-// function checkSafe() {
-//   if ($(".newdiv").width() <=0) {
-//
-//   }
-//
-//   }
+function checkSafe() {
+  if ($(".newdiv").width() > 5) {
+  // //
+    //Find left and top edge of the player
+    var playerLeft = player.offset().left;
+    var playerTop = player.offset().top;
+
+    //find right and bottom edge of player
+    var playerRight = playerLeft + player.width();
+    var playerBottom = playerTop + player.height();
+
+    var divLeft = $(".newdiv").offset().left;
+    var divTop = $(".newdiv").offset().top;
+    var divRight = divLeft + $(".newdiv").width();
+    var divBottom = divTop + $(".newdiv").height();
+  // //
+    if ((divTop<=playerTop && playerTop<=divBottom) ) {
+      if (divLeft<=playerRight && playerRight<=divRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".newdiv").remove();
+
+      }else if (divLeft<=playerLeft && playerLeft<=divRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".newdiv").remove();
+
+      }
+      // &&((divLeft<playerRight<divRight) || (divLeft<playerLeft<divRight))
+    }else if ((divTop<=playerBottom && playerBottom<=divBottom) ) {
+      if (divLeft<=playerRight && playerRight<=divRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".newdiv").remove();
+
+      }else if (divLeft<=playerLeft && playerLeft<=divRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".newdiv").remove();
+
+      }
+    }
+  //
+  // //
+  // // console.log("divRight: " + divRight);
+  // console.log("divTop: " + divTop);
+  // console.log("playerTop: " + playerTop);
+  // console.log("divBottom: " + divBottom);
+}else if ($(".newdiv").width() < 5 ) {
+  lives-=1;
+  $("#lives").html(lives);
+  $(".newdiv").remove();
+}
+
+
+  setTimeout(checkSafe,1);
+}
+
+
+
 
 });

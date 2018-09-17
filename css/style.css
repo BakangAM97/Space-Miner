@@ -1,15 +1,17 @@
 @keyframes shrink {
   0%{width:50px;
       height: 50px}
-  100%{width: 0;
-        height: 0;}
+  99%{width: 5px;
+        height: 5px;}
+  100%{width:4px;
+      height: 4px}
 }
 
 body{
   text-align: center;
   background-color: rgb(214, 168, 219,0.5);
   font-family: fantasy;
-  color: white;
+  color: black;
 }
 
 .container{
@@ -21,8 +23,8 @@ body{
 }
 
 .player{
-  height:30px;
-  width:30px;
+  height:20px;
+  width:20px;
   background: firebrick;
   border-radius: 50%;
   position: absolute;
