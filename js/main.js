@@ -1,14 +1,21 @@
 $(document).ready(function(){
 
+//Setting up variables
 var player = $(".player");
 var board = $(".container");
 var lifeCounter = $("lifeCounter")
+var points = 0;
 var lives = 3;
+
+//Setting Starting Position
 var playerXpos = 400;
 var playerYpos = 250;
+
 var keyPress=[]
 var speed = 3;
+
 $("#lives").html(lives);
+$("#points").html(points);
 
 //Find left and top edge of the board
 var boardLeft = board.offset().left;
@@ -25,11 +32,16 @@ $(document).keyup(function(event){
   keyPress[event.which] = false;
 })
 
+//Replay button
+$("#replay").click(reset)
+
+Game();
+
+function Game() {
 movePlayer();
 addDiv();
 checkSafe();
-
-
+}
 
 function movePlayer() {
 
@@ -44,7 +56,7 @@ function movePlayer() {
   var playerBottom = playerTop + player.height();
 
 
-    //horizontal collisions
+  //horizontal movement
 
   if (playerRight<= boardRight) {
     if (keyPress[39]) {
@@ -56,7 +68,7 @@ function movePlayer() {
       playerXpos-=speed;
     }
   }
-  //vertical collisions
+  //vertical movement
   if (playerTop>=boardTop) {
     if (keyPress[38]) {
       playerYpos-=speed;
@@ -68,7 +80,7 @@ function movePlayer() {
     }
   }
 
-  // }
+  //Changing player position
   player.css({
     "top": playerYpos + "px",
     "left": playerXpos + "px"
@@ -76,13 +88,15 @@ function movePlayer() {
 
 
 
-  setTimeout(movePlayer, 10);
+  moveRepeat = setTimeout(movePlayer, 10);
 }
 
-
 function addDiv() {
+  //Generating random x and y positions
   var x = Math.floor(Math.random()*(board.width() -30));
   var y = Math.floor(Math.random()*(board.height() -30));
+
+  //Generating random div
   $(".container").append("<div class = 'newdiv'></div>");
   $(".newdiv").css({
     "top": y + "px",
@@ -90,7 +104,7 @@ function addDiv() {
   })
   $(".newdiv").addClass("add-animation");
 
-  var repeat  = setTimeout(addDiv,3000);
+  divRepeat  = setTimeout(addDiv,3000);
   var remove = setTimeout(function(){
     $(".newdiv").remove();
   },2990);
@@ -99,7 +113,7 @@ function addDiv() {
 
 function checkSafe() {
   if ($(".newdiv").width() > 5) {
-  // //
+
     //Find left and top edge of the player
     var playerLeft = player.offset().left;
     var playerTop = player.offset().top;
@@ -108,58 +122,84 @@ function checkSafe() {
     var playerRight = playerLeft + player.width();
     var playerBottom = playerTop + player.height();
 
+    //find left and top edge of random div
     var divLeft = $(".newdiv").offset().left;
     var divTop = $(".newdiv").offset().top;
+
+    //find bottom and right edge of random div
     var divRight = divLeft + $(".newdiv").width();
     var divBottom = divTop + $(".newdiv").height();
-  // //
+
+    // finds if you've entered random div from the bottom up
     if ((divTop<=playerTop && playerTop<=divBottom) ) {
+
+      //finds if the left or the left or right edge of the div are in the zone.
+
       if (divLeft<=playerRight && playerRight<=divRight) {
 
-        lives+=1;
-        $("#lives").html(lives);
+        points+=1;
+        $("#points").html(points);
         $(".newdiv").remove();
 
       }else if (divLeft<=playerLeft && playerLeft<=divRight) {
 
-        lives+=1;
-        $("#lives").html(lives);
+        points+=1;
+        $("#points").html(points);
         $(".newdiv").remove();
-
       }
-      // &&((divLeft<playerRight<divRight) || (divLeft<playerLeft<divRight))
+
+    // finds if you've entered random div from the top up
     }else if ((divTop<=playerBottom && playerBottom<=divBottom) ) {
+
+      //finds if the left or the left or right edge of the div are in the zone.
       if (divLeft<=playerRight && playerRight<=divRight) {
 
-        lives+=1;
-        $("#lives").html(lives);
+        points+=1;
+        $("#points").html(points);
         $(".newdiv").remove();
 
       }else if (divLeft<=playerLeft && playerLeft<=divRight) {
 
-        lives+=1;
-        $("#lives").html(lives);
+        points+=1;
+        $("#points").html(points);
         $(".newdiv").remove();
-
-      }
     }
-  //
-  // //
-  // // console.log("divRight: " + divRight);
-  // console.log("divTop: " + divTop);
-  // console.log("playerTop: " + playerTop);
-  // console.log("divBottom: " + divBottom);
-}else if ($(".newdiv").width() < 5 ) {
-  lives-=1;
+  //If the div gets too small it is removed and you lose a life.
+  } else if(divTop>=playerTop && divBottom<=playerBottom && divLeft>=playerLeft && divRight<=playerRight) {
+
+    points+=1;
+    $("#points").html(points);
+    $(".newdiv").remove();
+  }
+
+} else if ($(".newdiv").width() < 5 ) {
+    lives-=1;
+    $("#lives").html(lives);
+    $(".newdiv").remove();
+  }
+  checkAlive();
+  aliveRepeat = setTimeout(checkSafe,1);
+}
+
+function checkAlive(){
+  if (lives<0) {
+    clearTimeout(divRepeat);
+    clearTimeout(moveRepeat);
+    clearTimeout(aliveRepeat);
+    // alert("Game Over");
+  }
+}
+
+function reset(){
+  lives = 3;
+  points = 0;
   $("#lives").html(lives);
-  $(".newdiv").remove();
+  $("#points").html(points);
+  clearTimeout(divRepeat);
+  clearTimeout(moveRepeat);
+  clearTimeout(aliveRepeat);
+  Game();
 }
-
-
-  setTimeout(checkSafe,1);
-}
-
-
 
 
 });
