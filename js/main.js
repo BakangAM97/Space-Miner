@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 $("#gameOver").hide();
 $("#replay").hide();
+// $("#info").hide();
 
 //Setting up variables
 var player = $(".player");
@@ -188,22 +189,26 @@ function movePlayer() {
   if (playerRight<= boardRight) {
     if (keyPress[39]) {
       playerXpos+=speed;
+      $(".player").html('<img src="images/piskel.gif" height="60px" alt="animated">');
     }
   }
   if (playerLeft>= boardLeft) {
     if (keyPress[37]) {
       playerXpos-=speed;
+      $(".player").html('<img src="images/piskel2.gif" height="60px" alt="animated">');
     }
   }
   //vertical movement
   if (playerTop>=boardTop) {
     if (keyPress[38]) {
       playerYpos-=speed;
+      // $(".player").html('<img src="images/piskel.gif" height="60px" alt="animated">');
     }
   }
   if (playerBottom<=boardBottom) {
     if (keyPress[40]) {
       playerYpos+=speed;
+      // $(".player").html('<img src="images/piskel2.gif" height="60px" alt="animated">');
     }
   }
 

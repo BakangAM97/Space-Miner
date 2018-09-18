@@ -3,32 +3,50 @@
   <head>
     <meta charset="utf-8">
     <title>Game - Project</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" onkeyup=""integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/main.js" charset="utf-8"></script>
   </head>
   <body>
-    <!-- <h1>Zone Rush</h1> -->
-    <div class="">
-      <p id="lifeCounter">Lives</p> <span id="lives"></span>
-    </div>
-    <div class="">
-      <p>Points</p> <span id="points"></span>
-    </div>
-    <div class="">
-      <button type="submit" name="button" id="replay">replay</button>
-      <button type="submit" name="button" id="easy">easy mode </button>
-      <button type="submit" name="button" id="hard">hard mode</button>
-    </div>
+
+    <main>
+      <h1 class="title">Zone Rush</h1>
+      <div class="container1">
+
+        <div class="navigation">
+
+          <div class="buttons">
+            <button type="submit" name="button" id="replay" class="gamebutton">replay</button>
+            <button type="submit" name="button" id="easy" class="gamebutton">easy mode </button>
+            <button type="submit" name="button" id="hard" class="gamebutton">hard mode</button>
+          </div>
+          <div class="lifeCounter">
+            <p>Lives</p> <p id="lives" class = "change"></p>
+          </div>
+          <div class="pointCounter">
+            <p>Points</p> <p id="points" class = "change"></p>
+          </div>
+        </div>
 
 
-    <div class="container">
-      <div class="" id="info">
+        <div class="container">
+          <div class="" id="info">
+            <h2>Welcome to ...</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exeritation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volulpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exeritation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volulpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exeritation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volulpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exeritation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volulpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+          <div class="" id="gameOver">
+          </div>
+          <div class="player">
+            <img src="images/piskel.gif" height="60px" alt="animated">
+          </div>
+        </div>
       </div>
-      <div class="" id="gameOver">
-      </div>
-        <div class="player"></div>
-    </div>
+  </main>
 
   </body>
 </html>

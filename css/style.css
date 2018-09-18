@@ -10,23 +10,45 @@
 body{
   text-align: center;
   background-color: rgb(214, 168, 219,0.5);
-  font-family: fantasy;
-  color: black;
+  font-family: 'Russo One', sans-serif;
+  color: hotpink;
+  background-image: url(../images/space-bg4.jpg);
+  background-size: cover;
+  font-size: 1.5em;
+  margin: 0;
 }
+main{
+  /* height: 100vh; */
+}
+.title{
+  color: hotpink;
+  font-size: 3em;
 
+	text-shadow:
+		-2px -2px 0 #000,
+		2px -2px 0 #000,
+		-2px 2px 0 #000,
+		2px 2px 0 #000;
+
+}
 .container{
   width: 800px;
   height: 500px;
   background-color: black;
+  background-image: url(../images/space-bg2.jpg);
+  background-size: cover;
   margin: 5% auto;
   position: relative;
+  border: solid 5px hotpink;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .player{
-  height:20px;
+  /* height:20px;
   width:20px;
   background: firebrick;
-  border-radius: 50%;
+  border-radius: 50%; */
   position: absolute;
   position: absolute;
   left: 400px;
@@ -53,11 +75,21 @@ body{
   position: absolute;
 }
 #info{
-  background-color: blue;
+  background:linear-gradient(rgb(128,128,128,0.3), rgb(128,128,128,0.3)), url(../images/space-bg.png);
+  background-size: cover;
   height: 100%;
+  font-size: 0.9em;
   width: 100%;
   z-index: 9;
   position: absolute;
+  color: hotpink;
+  font-family: 'M PLUS 1p', sans-serif;
+  overflow: scroll;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 
 #gameOver{
@@ -66,4 +98,63 @@ body{
   z-index: 10;
   position: absolute;
   background-color: red;
+}
+.navigation{
+  display: flex;
+  /* justify-content: center; */
+  align-content: space-between;
+  flex-wrap: wrap;
+  width: 800px;
+  margin: 0 auto;
+}
+.buttons{
+  flex: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+.gamebutton{
+  margin-left: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: 'Russo One', sans-serif;
+  background-color: rgb(0,0,0);
+  color: hotpink;
+  border-color: hotpink;
+  letter-spacing: 3px;
+  font-size: .8em;
+  /* text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; */
+}
+.gamebutton:hover{
+  background-color: #999;
+}
+.lifeCounter{
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 2px;
+}
+.pointCounter{
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  letter-spacing: 2px;
+}
+.change{
+  padding-left: 10px;
 }
