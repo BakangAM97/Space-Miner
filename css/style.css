@@ -28,8 +28,9 @@ body{
   background: firebrick;
   border-radius: 50%;
   position: absolute;
-  /* top:250px;
-  left: 400px; */
+  position: absolute;
+  left: 400px;
+  top: 250px;
 }
 
 .newdiv{
@@ -49,4 +50,19 @@ body{
 }
 .heart, .points{
   position: absolute;
+}
+#info{
+  background-color: blue;
+  height: 100%;
+  width: 100%;
+  z-index: 9;
+  position: absolute;
+}
+
+#gameOver{
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  background-color: red;
 }
