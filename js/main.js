@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 $("#gameOver").hide();
+$("#replay").hide();
 
 //Setting up variables
 var player = $(".player");
@@ -23,6 +24,7 @@ var checkRepeat;
 var heartrepeat;
 var moveRepeat;
 var pointsRepeat;
+var morePointsRepeat;
 
 
 $("#lives").html(lives);
@@ -51,12 +53,10 @@ $("#replay").click(function() {
 
 $("#easy").click(function(){
   $("#info").hide();
-  // reset();
-  clearInterval(moveRepeat);
-  clearInterval(checkRepeat);
-  clearInterval(heartrepeat);
-  clearInterval(divRepeat);
-  clearInterval(pointsRepeat);
+  $("#replay").show();
+  clearBoard();
+  clearIntervals();
+
   player.css({
     "top": 250 + "px",
     "left": 400 + "px"
@@ -69,12 +69,10 @@ $("#easy").click(function(){
 
 $("#hard").click(function(){
   $("#info").hide();
-  // reset();
-  clearInterval(moveRepeat);
-  clearInterval(checkRepeat);
-  clearInterval(heartrepeat);
-  clearInterval(divRepeat);
-  clearInterval(pointsRepeat);
+  $("#replay").show();
+  clearIntervals();
+  clearBoard();
+
   player.css({
     "top": 250 + "px",
     "left": 400 + "px"
@@ -89,7 +87,7 @@ $("#hard").click(function(){
 
 function Game(){
 
-  var speed = 2.5;
+  var speed = 2;
 
   movePlayer();
   checkSafe();
@@ -101,66 +99,76 @@ function Game(){
   checkRepeat = setInterval(checkSafe,10);
   heartrepeat = setInterval(addLives,4000);
   moveRepeat = setInterval(movePlayer, 10);
-  pointsRepeat = setInterval(addPoints,3000);
+  pointsRepeat = setInterval(addPoints,5000);
 
   }
 
 function gameHard(){
 
-  var speed = 0.5;
+  var speed = 1;
 
   movePlayer();
   checkSafe();
   addDiv();
+  addMorePoints();
 
 
   divRepeat  = setInterval(addDiv,3000);
   checkRepeat = setInterval(checkSafe,10);
   moveRepeat = setInterval(movePlayer, 10);
   pointsRepeat = setInterval(addPoints,3000);
+  morePointsRepeat = setInterval(addMorePoints,5000)
 
   }
 
 
 function reset(){
+
+  player.css({
+    "top": 250 + "px",
+    "left": 400 + "px"
+  });
+
   lives = 3;
   points = 0;
+
   $("#lives").html(lives);
   $("#points").html(points);
+
+  clearIntervals();
+  clearBoard();
+
+  if ($("#easy").is(":hidden")) {
+
+    setTimeout(Game,2000);
+
+  }else if ($("#hard").is(":hidden")) {
+
+    setTimeout(gameHard,2000);
+
+  }else {
+
+  }
+
+}
+
+function clearIntervals() {
   clearInterval(moveRepeat);
   clearInterval(checkRepeat);
   clearInterval(heartrepeat);
   clearInterval(divRepeat);
   clearInterval(pointsRepeat);
-
-  $(".heart").remove();
-  $(".points").remove();
-  $(".newdiv").remove();
-  if ($("#easy").is(":hidden")) {
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    });
-    // setTimeout(gameHard);
-    setTimeout(Game,2000);
-
-  }else if ($("#hard").is(":hidden")) {
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    });
-    setTimeout(gameHard,2000);
-
-  }else {
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    })
-  }
-  // Game();
-
+  clearInterval(morePointsRepeat);
 }
 
+function clearBoard() {
+  $(".heart").remove();
+  $("#points1").remove();
+  $("#points2").remove();
+  $("#points3").remove();
+  $(".newdiv").remove();
+  $(".morePoints").remove();
+}
 
 function movePlayer() {
 
@@ -223,7 +231,7 @@ function addDiv() {
 
   var remove = setTimeout(function(){
     $(".newdiv").remove();
-  },2990);
+  },2500);
 
 }
 function addLives() {
@@ -247,17 +255,37 @@ function addLives() {
 }
 function addPoints(){
     var x = Math.floor(Math.random()*(board.width() -30));
+    var x1 = Math.floor(Math.random()*(board.width() -30));
+    var x2 = Math.floor(Math.random()*(board.width() -30));
     var y = Math.floor(Math.random()*(board.height() -30));
+    var y1 = Math.floor(Math.random()*(board.height() -30));
+    var y2 = Math.floor(Math.random()*(board.height() -30));
 
-    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt=""> ');
-    $(".points").css({
+    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points1"> ');
+    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points2"> ');
+    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points3"> ');
+    $("#points1").css({
       "top": y + "px",
       "left": x + "px"
     })
+    $("#points2").css({
+      "top": y1 + "px",
+      "left": x1 + "px"
+    })
+    $("#points2").css({
+      "top": y2 + "px",
+      "left": x2 + "px"
+    })
 
-    var remove = setTimeout(function(){
-      $(".points").remove();
-    },2000);
+    var remove1 = setTimeout(function(){
+      $("#points1").remove();
+    },4500);
+    var remove2 = setTimeout(function(){
+      $("#points2").remove();
+    },3000);
+    var remove3 = setTimeout(function(){
+      $("#points3").remove();
+    },1500);
   }
 function addMorePoints() {
   var x = Math.floor(Math.random()*(board.width() -30));
@@ -429,48 +457,138 @@ function checkSafe() {
     }
   }
   function checkPoints(){
-    if ($(".points").length != 0 ) {
+    if ($("#points1").length != 0 ) {
 
       //find left and top edge of random div
-      var pointsLeft = $(".points").offset().left;
-      var pointsTop = $(".points").offset().top;
+      var points1Left = $("#points1").offset().left;
+      var points1Top = $("#points1").offset().top;
 
       //find bottom and right edge of random points
-      var pointsRight = pointsLeft + $(".points").width();
-      var pointsBottom = pointsTop + $(".points").height();
+      var points1Right = points1Left + $("#points1").width();
+      var points1Bottom = points1Top + $("#points1").height();
 
-      if ((pointsTop<=playerTop && playerTop<=pointsBottom) ) {
+      if ((points1Top<=playerTop && playerTop<=points1Bottom) ) {
 
         //finds if the left or the left or right edge of the points are in the zone.
 
-        if (pointsLeft<=playerRight && playerRight<=pointsRight) {
+        if (points1Left<=playerRight && playerRight<=points1Right) {
 
           points+=1;
           $("#points").html(points);
-          $(".points").remove();
+          $("#points1").remove();
 
-        }else if (pointsLeft<=playerLeft && playerLeft<=pointsRight) {
+        }else if (points1Left<=playerLeft && playerLeft<=points1Right) {
 
           points+=1;
           $("#points").html(points);
-          $(".points").remove();
+          $("#points1").remove();
         }
 
         // finds if you've entered random points from the top up
-      }else if ((pointsTop<=playerBottom && playerBottom<=pointsBottom) ) {
+      }else if ((points1Top<=playerBottom && playerBottom<=points1Bottom) ) {
 
         //finds if the left or the left or right edge of the points are in the zone.
-        if (pointsLeft<=playerRight && playerRight<=pointsRight) {
+        if (points1Left<=playerRight && playerRight<=points1Right) {
 
           points+=1;
           $("#points").html(points);
-          $(".points").remove();
+          $("#points1").remove();
 
-        }else if (pointsLeft<=playerLeft && playerLeft<=pointsRight) {
+        }else if (points1Left<=playerLeft && playerLeft<=points1Right) {
 
           points+=1;
           $("#points").html(points);
-          $(".points").remove();
+          $("#points1").remove();
+        }
+      }
+    }
+    if ($("#points2").length != 0 ) {
+
+      //find left and top edge of random div
+      var points2Left = $("#points2").offset().left;
+      var points2Top = $("#points2").offset().top;
+
+      //find bottom and right edge of random points
+      var points2Right = points2Left + $("#points2").width();
+      var points2Bottom = points2Top + $("#points2").height();
+
+      if ((points2Top<=playerTop && playerTop<=points2Bottom) ) {
+
+        //finds if the left or the left or right edge of the points are in the zone.
+
+        if (points2Left<=playerRight && playerRight<=points2Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points2").remove();
+
+        }else if (points2Left<=playerLeft && playerLeft<=points2Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points2").remove();
+        }
+
+        // finds if you've entered random points from the top up
+      }else if ((points2Top<=playerBottom && playerBottom<=points2Bottom) ) {
+
+        //finds if the left or the left or right edge of the points are in the zone.
+        if (points2Left<=playerRight && playerRight<=points2Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points2").remove();
+
+        }else if (points2Left<=playerLeft && playerLeft<=points2Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points2").remove();
+        }
+      }
+    }
+    if ($("#points3").length != 0 ) {
+
+      //find left and top edge of random div
+      var points3Left = $("#points3").offset().left;
+      var points3Top = $("#points3").offset().top;
+
+      //find bottom and right edge of random points
+      var points3Right = points3Left + $("#points3").width();
+      var points3Bottom = points3Top + $("#points3").height();
+
+      if ((points3Top<=playerTop && playerTop<=points3Bottom) ) {
+
+        //finds if the left or the left or right edge of the points are in the zone.
+
+        if (points3Left<=playerRight && playerRight<=points3Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points3").remove();
+
+        }else if (points3Left<=playerLeft && playerLeft<=points3Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points3").remove();
+        }
+
+        // finds if you've entered random points from the top up
+      }else if ((points3Top<=playerBottom && playerBottom<=points3Bottom) ) {
+
+        //finds if the left or the left or right edge of the points are in the zone.
+        if (points3Left<=playerRight && playerRight<=points3Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points3").remove();
+
+        }else if (points3Left<=playerLeft && playerLeft<=points3Right) {
+
+          points+=1;
+          $("#points").html(points);
+          $("#points3").remove();
         }
       }
     }

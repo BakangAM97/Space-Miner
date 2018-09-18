@@ -45,7 +45,7 @@ body{
 
 .add-animation{
   animation: shrink;
-  animation-duration: 3s;
+  animation-duration: 2.5s;
   /* animation-iteration-count: infinite; */
 
 }
