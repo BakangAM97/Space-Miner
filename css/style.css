@@ -1,6 +1,6 @@
 @keyframes shrink {
-  0%{width:50px;
-      height: 50px}
+  0%{width:80px;
+      height: 80px}
   99%{width: 5px;
         height: 5px;}
   100%{width:4px;
@@ -34,9 +34,10 @@ body{
 }
 
 .newdiv{
-  background-color: hotpink;
-  height: 50px;
-  width: 50px;
+  background-color: rgb(96, 164, 247,0.8);
+  border: solid 1px white;
+  height: 80px;
+  width: 80px;
   border-radius: 50%;
   position: absolute;
 
@@ -48,7 +49,7 @@ body{
   /* animation-iteration-count: infinite; */
 
 }
-.heart, .points{
+.heart, .points, .morePoints{
   position: absolute;
 }
 #info{

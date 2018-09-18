@@ -87,7 +87,7 @@ $("#hard").click(function(){
 // gameHard();
 // Game();
 
-function Game() {
+function Game(){
 
   var speed = 2.5;
 
@@ -102,6 +102,7 @@ function Game() {
   heartrepeat = setInterval(addLives,4000);
   moveRepeat = setInterval(movePlayer, 10);
   pointsRepeat = setInterval(addPoints,3000);
+
   }
 
 function gameHard(){
@@ -131,6 +132,10 @@ function reset(){
   clearInterval(heartrepeat);
   clearInterval(divRepeat);
   clearInterval(pointsRepeat);
+
+  $(".heart").remove();
+  $(".points").remove();
+  $(".newdiv").remove();
   if ($("#easy").is(":hidden")) {
     player.css({
       "top": 250 + "px",
@@ -205,8 +210,8 @@ function movePlayer() {
 
 function addDiv() {
   //Generating random x and y positions
-  var x = Math.floor(Math.random()*(board.width() -30));
-  var y = Math.floor(Math.random()*(board.height() -30));
+  var x = Math.floor(Math.random()*(board.width() -80));
+  var y = Math.floor(Math.random()*(board.height() -80));
 
   //Generating random div
   $(".container").append("<div class = 'newdiv'></div>");
@@ -237,14 +242,14 @@ function addLives() {
       $(".heart").remove();
     },2000);
   } else {
-    addPoints();
+    addMorePoints();
   }
 }
 function addPoints(){
     var x = Math.floor(Math.random()*(board.width() -30));
     var y = Math.floor(Math.random()*(board.height() -30));
 
-    $(".container").append('<img src="images/arrow.png" width="20px" class= "points" alt=""> ');
+    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt=""> ');
     $(".points").css({
       "top": y + "px",
       "left": x + "px"
@@ -254,6 +259,20 @@ function addPoints(){
       $(".points").remove();
     },2000);
   }
+function addMorePoints() {
+  var x = Math.floor(Math.random()*(board.width() -30));
+  var y = Math.floor(Math.random()*(board.height() -30));
+
+  $(".container").append('<img src="images/money2.png" width="50px" class= "morePoints" alt=""> ');
+  $(".morePoints").css({
+    "top": y + "px",
+    "left": x + "px"
+  })
+
+  var remove = setTimeout(function(){
+    $(".morePoints").remove();
+  },2000);
+}
 
 function checkSafe() {
   //Find left and top edge of the player
@@ -268,6 +287,7 @@ function checkSafe() {
   checkAlive();
   checkLives();
   checkPoints();
+  checkMorePoints();
 
   function checkAlive(){
     if (lives<0) {
@@ -410,14 +430,6 @@ function checkSafe() {
   }
   function checkPoints(){
     if ($(".points").length != 0 ) {
-      // //Find left and top edge of the player
-      // var playerLeft = player.offset().left;
-      // var playerTop = player.offset().top;
-      //
-      // //find right and bottom edge of player
-      // var playerRight = playerLeft + player.width();
-      // var playerBottom = playerTop + player.height();
-
 
       //find left and top edge of random div
       var pointsLeft = $(".points").offset().left;
@@ -462,6 +474,58 @@ function checkSafe() {
         }
       }
     }
+  }
+  function checkMorePoints() {
+    if ($(".morePoints").length != 0 ) {
+
+      //find left and top edge of random div
+      var morePointsLeft = $(".morePoints").offset().left;
+      var morePointsTop = $(".morePoints").offset().top;
+
+      //find bottom and right edge of random morePoints
+      var morePointsRight = morePointsLeft + $(".morePoints").width();
+      var morePointsBottom = morePointsTop + $(".morePoints").height();
+
+      if ((morePointsTop<=playerTop && playerTop<=morePointsBottom) ) {
+
+        //finds if the left or the left or right edge of the morePoints are in the zone.
+
+        if (morePointsLeft<=playerRight && playerRight<=morePointsRight) {
+
+          points+=5;
+          $("#points").html(points);
+          $(".morePoints").remove();
+          console.log("more points");
+
+        }else if (morePointsLeft<=playerLeft && playerLeft<=morePointsRight) {
+
+          points+=5;
+          $("#points").html(points);
+          $(".morePoints").remove();
+          console.log("more points");
+        }
+
+        // finds if you've entered random points from the top up
+      }else if ((morePointsTop<=playerBottom && playerBottom<=morePointsBottom) ) {
+
+        //finds if the left or the left or right edge of the morePoints are in the zone.
+        if (morePointsLeft<=playerRight && playerRight<=morePointsRight) {
+
+          points+=5;
+          $("#points").html(points);
+          $(".morePoints").remove();
+          console.log("more points");
+
+        }else if (morePointsLeft<=playerLeft && playerLeft<=morePointsRight) {
+
+          points+=5;
+          $("#points").html(points);
+          $(".morePoints").remove();
+          console.log("more points");
+        }
+      }
+    }
+
   }
 
 }
