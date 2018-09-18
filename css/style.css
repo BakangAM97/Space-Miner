@@ -47,3 +47,6 @@ body{
   /* animation-iteration-count: infinite; */
 
 }
+.heart, .points{
+  position: absolute;
+}

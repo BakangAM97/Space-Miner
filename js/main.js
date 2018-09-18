@@ -12,7 +12,7 @@ var playerXpos = 400;
 var playerYpos = 250;
 
 var keyPress=[]
-var speed = 3;
+var speed = 2.5;
 
 $("#lives").html(lives);
 $("#points").html(points);
@@ -35,13 +35,29 @@ $(document).keyup(function(event){
 //Replay button
 $("#replay").click(reset)
 
+// gameHard();
 Game();
 
 function Game() {
-movePlayer();
-addDiv();
-checkSafe();
-}
+  movePlayer();
+  checkSafe();
+  addDiv();
+  addPoints();
+  addLives();
+
+  divRepeat  = setInterval(addDiv,3000);
+  checkRepeat = setInterval(checkSafe,10);
+  heartrepeat = setInterval(addLives,7300);
+  moveRepeat = setInterval(movePlayer, 10);
+  pointsRepeat = setInterval(addPoints,3000);
+  }
+
+function gameHard(){
+    movePlayer();
+    checkSafe();
+    addDiv();
+    speed = 1.8;
+  }
 
 function movePlayer() {
 
@@ -87,8 +103,6 @@ function movePlayer() {
   })
 
 
-
-  moveRepeat = setTimeout(movePlayer, 10);
 }
 
 function addDiv() {
@@ -104,7 +118,6 @@ function addDiv() {
   })
   $(".newdiv").addClass("add-animation");
 
-  divRepeat  = setTimeout(addDiv,3000);
   var remove = setTimeout(function(){
     $(".newdiv").remove();
   },2990);
@@ -112,6 +125,116 @@ function addDiv() {
 }
 
 function checkSafe() {
+  //Find left and top edge of the player
+  var playerLeft = player.offset().left;
+  var playerTop = player.offset().top;
+
+  //find right and bottom edge of player
+  var playerRight = playerLeft + player.width();
+  var playerBottom = playerTop + player.height();
+
+  checkDiv();
+  checkAlive();
+  checkLive();
+  checkPoints();
+}
+
+function checkAlive(){
+  if (lives<0) {
+    clearInterval(moveRepeat);
+    clearInterval(checkRepeat);
+    clearInterval(divRepeat);
+    clearInterval(heartRepeat);
+    clearInterval(pointsRepeat);
+    // alert("Game Over");
+  }
+}
+
+function reset(){
+  lives = 3;
+  points = 0;
+  $("#lives").html(lives);
+  $("#points").html(points);
+  clearInterval(heartrepeat);
+  clearInterval(moveRepeat);
+  clearInterval(checkRepeat);
+  clearInterval(divRepeat);
+  clearInterval(pointsRepeat);
+  Game();
+}
+
+function addLives() {
+  var x = Math.floor(Math.random()*(board.width() -30));
+  var y = Math.floor(Math.random()*(board.height() -30));
+
+  $(".container").append('<img src="images/heart.png" width="30px" class= "heart" alt=""> ');
+  $(".heart").css({
+    "top": y + "px",
+    "left": x + "px"
+  })
+
+  var remove = setTimeout(function(){
+    $(".heart").remove();
+  },2000);
+}
+
+function checkLive() {
+  if ($(".heart").length != 0 ) {
+    //Find left and top edge of the player
+    var playerLeft = player.offset().left;
+    var playerTop = player.offset().top;
+
+    //find right and bottom edge of player
+    var playerRight = playerLeft + player.width();
+    var playerBottom = playerTop + player.height();
+
+
+    //find left and top edge of random div
+    var heartLeft = $(".heart").offset().left;
+    var heartTop = $(".heart").offset().top;
+
+    //find bottom and right edge of random heart
+    var heartRight = heartLeft + $(".heart").width();
+    var heartBottom = heartTop + $(".heart").height();
+
+    if ((heartTop<=playerTop && playerTop<=heartBottom) ) {
+
+      //finds if the left or the left or right edge of the heart are in the zone.
+
+      if (heartLeft<=playerRight && playerRight<=heartRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".heart").remove();
+
+      }else if (heartLeft<=playerLeft && playerLeft<=heartRight) {
+
+        lives+=1;
+        $("#lives").html(lives);
+        $(".heart").remove();
+      }
+
+    // finds if you've entered random heart from the top up
+    }else if ((heartTop<=playerBottom && playerBottom<=heartBottom) ) {
+
+        //finds if the left or the left or right edge of the heart are in the zone.
+        if (heartLeft<=playerRight && playerRight<=heartRight) {
+
+          lives+=1;
+          $("#lives").html(lives);
+          $(".heart").remove();
+
+        }else if (heartLeft<=playerLeft && playerLeft<=heartRight) {
+
+          lives+=1;
+          $("#lives").html(lives);
+          $(".heart").remove();
+      }
+    }
+  }
+}
+
+function checkDiv() {
   if ($(".newdiv").width() > 5) {
 
     //Find left and top edge of the player
@@ -136,14 +259,15 @@ function checkSafe() {
       //finds if the left or the left or right edge of the div are in the zone.
 
       if (divLeft<=playerRight && playerRight<=divRight) {
-
-        points+=1;
+        var score = Math.floor($(".newdiv").width());
+        points+=score;
         $("#points").html(points);
         $(".newdiv").remove();
 
       }else if (divLeft<=playerLeft && playerLeft<=divRight) {
-
-        points+=1;
+        var score = Math.floor($(".newdiv").width());
+        points+=score;
+        // points+=1;
         $("#points").html(points);
         $(".newdiv").remove();
       }
@@ -153,53 +277,104 @@ function checkSafe() {
 
       //finds if the left or the left or right edge of the div are in the zone.
       if (divLeft<=playerRight && playerRight<=divRight) {
-
-        points+=1;
+        var score = Math.floor($(".newdiv").width());
+        points+=score;
+        // points+=1;
         $("#points").html(points);
         $(".newdiv").remove();
 
       }else if (divLeft<=playerLeft && playerLeft<=divRight) {
-
-        points+=1;
+        var score = Math.floor($(".newdiv").width());
+        points+=score;
+        // points+=1;
         $("#points").html(points);
         $(".newdiv").remove();
     }
   //If the div gets too small it is removed and you lose a life.
   } else if(divTop>=playerTop && divBottom<=playerBottom && divLeft>=playerLeft && divRight<=playerRight) {
-
-    points+=1;
+    var score = Math.floor($(".newdiv").width());
+    points+=score;
+    // points+=1;
     $("#points").html(points);
     $(".newdiv").remove();
   }
 
-} else if ($(".newdiv").width() < 5 ) {
+  }else if ($(".newdiv").width() < 5 ) {
     lives-=1;
     $("#lives").html(lives);
     $(".newdiv").remove();
   }
-  checkAlive();
-  aliveRepeat = setTimeout(checkSafe,1);
 }
 
-function checkAlive(){
-  if (lives<0) {
-    clearTimeout(divRepeat);
-    clearTimeout(moveRepeat);
-    clearTimeout(aliveRepeat);
-    // alert("Game Over");
+function addPoints(){
+    var x = Math.floor(Math.random()*(board.width() -30));
+    var y = Math.floor(Math.random()*(board.height() -30));
+
+    $(".container").append('<img src="images/arrow.png" width="20px" class= "points" alt=""> ');
+    $(".points").css({
+      "top": y + "px",
+      "left": x + "px"
+    })
+
+    var remove = setTimeout(function(){
+      $(".points").remove();
+    },2000);
+  }
+
+function checkPoints(){
+  if ($(".points").length != 0 ) {
+    //Find left and top edge of the player
+    var playerLeft = player.offset().left;
+    var playerTop = player.offset().top;
+
+    //find right and bottom edge of player
+    var playerRight = playerLeft + player.width();
+    var playerBottom = playerTop + player.height();
+
+
+    //find left and top edge of random div
+    var pointsLeft = $(".points").offset().left;
+    var pointsTop = $(".points").offset().top;
+
+    //find bottom and right edge of random points
+    var pointsRight = pointsLeft + $(".points").width();
+    var pointsBottom = pointsTop + $(".points").height();
+
+    if ((pointsTop<=playerTop && playerTop<=pointsBottom) ) {
+
+      //finds if the left or the left or right edge of the points are in the zone.
+
+      if (pointsLeft<=playerRight && playerRight<=pointsRight) {
+
+        points+=1;
+        $("#points").html(points);
+        $(".points").remove();
+
+      }else if (pointsLeft<=playerLeft && playerLeft<=pointsRight) {
+
+        points+=1;
+        $("#points").html(points);
+        $(".points").remove();
+      }
+
+    // finds if you've entered random points from the top up
+  }else if ((pointsTop<=playerBottom && playerBottom<=pointsBottom) ) {
+
+        //finds if the left or the left or right edge of the points are in the zone.
+        if (pointsLeft<=playerRight && playerRight<=pointsRight) {
+
+          points+=1;
+          $("#points").html(points);
+          $(".points").remove();
+
+        }else if (pointsLeft<=playerLeft && playerLeft<=pointsRight) {
+
+          points+=1;
+          $("#points").html(points);
+          $(".points").remove();
+      }
+    }
   }
 }
-
-function reset(){
-  lives = 3;
-  points = 0;
-  $("#lives").html(lives);
-  $("#points").html(points);
-  clearTimeout(divRepeat);
-  clearTimeout(moveRepeat);
-  clearTimeout(aliveRepeat);
-  Game();
-}
-
 
 });
