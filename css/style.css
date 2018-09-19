@@ -1,3 +1,5 @@
+
+/* Animations */
 @keyframes shrink {
   0%{width:80px;
       height: 80px}
@@ -9,12 +11,15 @@
 
 body{
   text-align: center;
-  background-color: rgb(214, 168, 219,0.5);
+  /* background-color: rgb(214, 168, 219,0.5); */
   font-family: 'Russo One', sans-serif;
   color: yellow;
-  background-image: url(../images/space-bg4.jpg);
+  background-image: url(../images/space-bg4.png);
   background-size: cover;
+  background-repeat: no-repeat;
   font-size: 1.5em;
+  padding: 15px;
+  height: 100%;
   margin: 0;
 }
 main{
@@ -23,6 +28,8 @@ main{
 .title{
   color: yellow;
   font-size: 3em;
+
+  margin-top: 30px;
 
 	text-shadow:
 		-2px -2px 0 #000,
@@ -171,4 +178,16 @@ main{
 }
 .item{
   opacity: 0.8;
+}
+.container1{
+  position: relative;
+  margin-bottom: 10px;
+}
+.highscore{
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  flex: 3;
 }

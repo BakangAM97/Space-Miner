@@ -1,463 +1,465 @@
 $(document).ready(function(){
 
-$("#gameOver").hide();
-$("#replay").hide();
-// $("#info").hide();
-
-//Setting up variables
-var player = $(".player");
-var board = $(".container");
-var lifeCounter = $("lifeCounter")
-
-var points = 0;
-var lives = 3;
-var speed = 2.5;
-
-//Setting Starting Position
-var playerXpos = 400;
-var playerYpos = 250;
-
-
-var keyPress=[];
-
-var divRepeat;
-var checkRepeat;
-var heartrepeat;
-var moveRepeat;
-var pointsRepeat;
-var morePointsRepeat;
-
-var restartHard;
-var restartEasy;
-var modeEasy;
-var modeHard;
-
-var highscore;
-
-
-$("#lives").html(lives);
-$("#points").html(points);
-
-//Find left and top edge of the board
-var boardLeft = board.offset().left;
-var boardTop = board.offset().top;
-
-//find right and bottom edge of board
-var boardRight = boardLeft + board.width();
-var boardBottom = boardTop + board.height();
-
-$(document).keydown(function(event){
-  keyPress[event.which] = true;
-})
-$(document).keyup(function(event){
-  keyPress[event.which] = false;
-})
-
-//Replay button
-$("#replay").click(function() {
-  reset();
   $("#gameOver").hide();
-});
+  $("#replay").hide();
+  // $("#info").hide();
 
-$("#easy").click(function(){
-  $("#info").hide();
-  $("#replay").show();
-  $("#gameOver").hide();
+  //Setting up variables
+  var player = $(".player");
+  var board = $(".container");
+  var lifeCounter = $("lifeCounter")
 
-  clearTimeout(modeHard);
+  var points = 0;
+  var lives = 3;
+  var speed = 2.5;
 
-  clearBoard();
-  clearIntervals();
-
-  player.css({
-    "top": 250 + "px",
-    "left": 400 + "px"
-  })
-  // Game();
-  modeEasy = setTimeout(Game, 2500);
-  $("#easy").hide();
-  $("#hard").show()
-});
-
-$("#hard").click(function(){
-  $("#info").hide();
-  $("#replay").show();
-  $("#gameOver").hide();
-
-  clearTimeout(modeEasy)
-
-  clearIntervals();
-  clearBoard();
-
-  player.css({
-    "top": 250 + "px",
-    "left": 400 + "px"
-  })
-
-  modeHard = setTimeout(gameHard, 2500);
-  $("#hard").hide();
-  $("#easy").show()
-});
-
-function Game(){
-
-  speed = 2.5;
-
-  movePlayer();
-  checkSafe();
-  addDiv();
-  addPoints();
-  addLives();
-
-  divRepeat  = setInterval(addDiv,3000);
-  checkRepeat = setInterval(checkSafe,1);
-  heartrepeat = setInterval(addLives,10000);
-  moveRepeat = setInterval(movePlayer, 10);
-  pointsRepeat = setInterval(addPoints,5000);
-
-  }
-
-function gameHard(){
-
-  var speed = 1;
-
-  movePlayer();
-  checkSafe();
-  addDiv();
-  addMorePoints();
+  //Setting Starting Position
+  var playerXpos = 400;
+  var playerYpos = 250;
 
 
-  divRepeat  = setInterval(addDiv,3000);
-  checkRepeat = setInterval(checkSafe,10);
-  moveRepeat = setInterval(movePlayer, 10);
-  pointsRepeat = setInterval(addPoints,3000);
-  morePointsRepeat = setInterval(addMorePoints,5000)
+  var keyPress=[];
 
-  }
+  var divRepeat;
+  var checkRepeat;
+  var heartrepeat;
+  var moveRepeat;
+  var pointsRepeat;
+  var morePointsRepeat;
 
+  var restartHard;
+  var restartEasy;
+  var modeEasy;
+  var modeHard;
 
-function reset(){
+  var highscore=[];
 
-  player.css({
-    "top": 250 + "px",
-    "left": 400 + "px"
-  });
-
-  playerXpos = 400;
-  playerYpos = 250;
-
-  lives = 3;
-  points = 0;
 
   $("#lives").html(lives);
   $("#points").html(points);
 
-  clearTimeout(restartHard);
-  clearTimeout(restartEasy);
-  clearIntervals();
-  clearBoard();
+  //Find left and top edge of the board
+  var boardLeft = board.offset().left;
+  var boardTop = board.offset().top;
 
-  if ($("#easy").is(":hidden")) {
+  //find right and bottom edge of board
+  var boardRight = boardLeft + board.width();
+  var boardBottom = boardTop + board.height();
 
-    restartEasy = setTimeout(Game,2000);
-
-  }else if ($("#hard").is(":hidden")) {
-
-    restartHard = setTimeout(gameHard,2000);
-
-  }else {
-
-  }
-
-}
-
-function clearIntervals() {
-  clearInterval(moveRepeat);
-  clearInterval(checkRepeat);
-  clearInterval(heartrepeat);
-  clearInterval(divRepeat);
-  clearInterval(pointsRepeat);
-  clearInterval(morePointsRepeat);
-}
-
-function clearBoard() {
-  $(".heart").remove();
-  $("#points1").remove();
-  $("#points2").remove();
-  $("#points3").remove();
-  $(".newdiv").remove();
-  $(".morePoints").remove();
-}
-
-function movePlayer() {
-
-
-
-  //Find left and top edge of the player
-  var playerLeft = player.offset().left;
-  var playerTop = player.offset().top;
-
-  //find right and bottom edge of player
-  var playerRight = playerLeft + player.width();
-  var playerBottom = playerTop + player.height();
-
-
-  //horizontal movement
-
-  if (playerRight<= boardRight) {
-    if (keyPress[39]) {
-      playerXpos+=speed;
-      $(".player").html('<img src="images/astro-right.png" height="60px" alt="animated">');
-    }
-  }
-  if (playerLeft>= boardLeft) {
-    if (keyPress[37]) {
-      playerXpos-=speed;
-      $(".player").html('<img src="images/astro-left.png" height="60px" alt="animated">');
-    }
-  }
-  //vertical movement
-  if (playerTop>=boardTop) {
-    if (keyPress[38]) {
-      playerYpos-=speed;
-      // $(".player").html('<img src="images/piskel.gif" height="60px" alt="animated">');
-    }
-  }
-  if (playerBottom<=boardBottom) {
-    if (keyPress[40]) {
-      playerYpos+=speed;
-      // $(".player").html('<img src="images/piskel2.gif" height="60px" alt="animated">');
-    }
-  }
-
-  //Changing player position
-  player.css({
-    "top": playerYpos + "px",
-    "left": playerXpos + "px"
+  $(document).keydown(function(event){
+    keyPress[event.which] = true;
   })
-}
-
-function addDiv() {
-  //Generating random x and y positions
-  var x = Math.floor(Math.random()*(board.width() -80));
-  var y = Math.floor(Math.random()*(board.height() -80));
-
-  //Generating random div
-  $(".container").append("<div class = 'newdiv'></div>");
-  $(".newdiv").css({
-    "top": y + "px",
-    "left": x + "px"
+  $(document).keyup(function(event){
+    keyPress[event.which] = false;
   })
-  $(".newdiv").addClass("add-animation");
 
-  var remove = setTimeout(function(){
+  //Replay button
+  $("#replay").click(function() {
+    reset();
+    $("#gameOver").hide();
+  });
+
+  $("#easy").click(function(){
+    $("#info").hide();
+    $("#replay").show();
+    $("#gameOver").hide();
+
+    clearTimeout(modeHard);
+
+    clearBoard();
+    clearIntervals();
+
+    player.css({
+      "top": 250 + "px",
+      "left": 400 + "px"
+    })
+    // Game();
+    modeEasy = setTimeout(Game, 2500);
+    $("#easy").hide();
+    $("#hard").show()
+  });
+
+  $("#hard").click(function(){
+    $("#info").hide();
+    $("#replay").show();
+    $("#gameOver").hide();
+
+    clearTimeout(modeEasy)
+
+    clearIntervals();
+    clearBoard();
+
+    player.css({
+      "top": 250 + "px",
+      "left": 400 + "px"
+    })
+
+    modeHard = setTimeout(gameHard, 2500);
+    $("#hard").hide();
+    $("#easy").show()
+  });
+
+  function Game(){
+
+    speed = 2.5;
+
+    movePlayer();
+    checkSafe();
+    addDiv();
+    addPoints();
+    addLives();
+
+    divRepeat  = setInterval(addDiv,3000);
+    checkRepeat = setInterval(checkSafe,1);
+    heartrepeat = setInterval(addLives,10000);
+    moveRepeat = setInterval(movePlayer, 10);
+    pointsRepeat = setInterval(addPoints,5000);
+
+    }
+
+  function gameHard(){
+
+    var speed = 1;
+
+    movePlayer();
+    checkSafe();
+    addDiv();
+    addMorePoints();
+
+
+    divRepeat  = setInterval(addDiv,3000);
+    checkRepeat = setInterval(checkSafe,10);
+    moveRepeat = setInterval(movePlayer, 10);
+    pointsRepeat = setInterval(addPoints,3000);
+    morePointsRepeat = setInterval(addMorePoints,5000)
+
+    }
+
+
+  function reset(){
+
+    player.css({
+      "top": 250 + "px",
+      "left": 400 + "px"
+    });
+
+    playerXpos = 400;
+    playerYpos = 250;
+
+    lives = 3;
+    points = 0;
+
+    $("#lives").html(lives);
+    $("#points").html(points);
+
+    clearTimeout(restartHard);
+    clearTimeout(restartEasy);
+    clearIntervals();
+    clearBoard();
+
+    if ($("#easy").is(":hidden")) {
+
+      restartEasy = setTimeout(Game,2000);
+
+    }else if ($("#hard").is(":hidden")) {
+
+      restartHard = setTimeout(gameHard,2000);
+
+    }else {
+
+    }
+
+  }
+
+  function clearIntervals() {
+    clearInterval(moveRepeat);
+    clearInterval(checkRepeat);
+    clearInterval(heartrepeat);
+    clearInterval(divRepeat);
+    clearInterval(pointsRepeat);
+    clearInterval(morePointsRepeat);
+  }
+
+  function clearBoard() {
+    $(".heart").remove();
+    $("#points1").remove();
+    $("#points2").remove();
+    $("#points3").remove();
     $(".newdiv").remove();
-  },2500);
+    $(".morePoints").remove();
+  }
 
-}
-function addLives() {
-  if (lives<5) {
+  function movePlayer() {
 
+
+
+    //Find left and top edge of the player
+    var playerLeft = player.offset().left;
+    var playerTop = player.offset().top;
+
+    //find right and bottom edge of player
+    var playerRight = playerLeft + player.width();
+    var playerBottom = playerTop + player.height();
+
+
+    //horizontal movement
+
+    if (playerRight<= boardRight) {
+      if (keyPress[39]) {
+        playerXpos+=speed;
+        $(".player").html('<img src="images/astro-right.png" height="60px" alt="animated">');
+      }
+    }
+    if (playerLeft>= boardLeft) {
+      if (keyPress[37]) {
+        playerXpos-=speed;
+        $(".player").html('<img src="images/astro-left.png" height="60px" alt="animated">');
+      }
+    }
+    //vertical movement
+    if (playerTop>=boardTop) {
+      if (keyPress[38]) {
+        playerYpos-=speed;
+        // $(".player").html('<img src="images/piskel.gif" height="60px" alt="animated">');
+      }
+    }
+    if (playerBottom<=boardBottom) {
+      if (keyPress[40]) {
+        playerYpos+=speed;
+        // $(".player").html('<img src="images/piskel2.gif" height="60px" alt="animated">');
+      }
+    }
+
+    //Changing player position
+    player.css({
+      "top": playerYpos + "px",
+      "left": playerXpos + "px"
+    })
+  }
+
+  function addDiv() {
+    //Generating random x and y positions
+    var x = Math.floor(Math.random()*(board.width() -80));
+    var y = Math.floor(Math.random()*(board.height() -80));
+
+    //Generating random div
+    $(".container").append("<div class = 'newdiv'></div>");
+    $(".newdiv").css({
+      "top": y + "px",
+      "left": x + "px"
+    })
+    $(".newdiv").addClass("add-animation");
+
+    var remove = setTimeout(function(){
+      $(".newdiv").remove();
+    },2500);
+
+  }
+  function addLives() {
+    if (lives<5) {
+
+      var x = Math.floor(Math.random()*(board.width() -30));
+      var y = Math.floor(Math.random()*(board.height() -30));
+
+      $(".container").append('<img src="images/heart.png" width="30px" class= "heart item" alt=""> ');
+      $(".heart").css({
+        "top": y + "px",
+        "left": x + "px"
+      })
+
+      var remove = setTimeout(function(){
+        $(".heart").remove();
+      },2000);
+    } else {
+      addMorePoints();
+    }
+  }
+  function addPoints(){
+    var x = Math.floor(Math.random()*(board.width() -30));
+    var x1 = Math.floor(Math.random()*(board.width() -30));
+    var x2 = Math.floor(Math.random()*(board.width() -30));
+    var y = Math.floor(Math.random()*(board.height() -30));
+    var y1 = Math.floor(Math.random()*(board.height() -30));
+    var y2 = Math.floor(Math.random()*(board.height() -30));
+
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points1"> ');
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points2"> ');
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points3"> ');
+    $("#points1").css({
+      "top": y + "px",
+      "left": x + "px"
+    })
+    $("#points2").css({
+      "top": y1 + "px",
+      "left": x1 + "px"
+    })
+    $("#points2").css({
+      "top": y2 + "px",
+      "left": x2 + "px"
+    })
+
+    var remove1 = setTimeout(function(){
+      $("#points1").remove();
+    },4500);
+    var remove2 = setTimeout(function(){
+      $("#points2").remove();
+    },4500);
+    var remove3 = setTimeout(function(){
+      $("#points3").remove();
+    },4500);
+  }
+  function addMorePoints() {
     var x = Math.floor(Math.random()*(board.width() -30));
     var y = Math.floor(Math.random()*(board.height() -30));
 
-    $(".container").append('<img src="images/heart.png" width="30px" class= "heart item" alt=""> ');
-    $(".heart").css({
+    $(".container").append('<img src="images/money2.png" width="40px" class= "morePoints item" alt=""> ');
+    $(".morePoints").css({
       "top": y + "px",
       "left": x + "px"
     })
 
     var remove = setTimeout(function(){
-      $(".heart").remove();
+      $(".morePoints").remove();
     },2000);
-  } else {
-    addMorePoints();
-  }
-}
-function addPoints(){
-  var x = Math.floor(Math.random()*(board.width() -30));
-  var x1 = Math.floor(Math.random()*(board.width() -30));
-  var x2 = Math.floor(Math.random()*(board.width() -30));
-  var y = Math.floor(Math.random()*(board.height() -30));
-  var y1 = Math.floor(Math.random()*(board.height() -30));
-  var y2 = Math.floor(Math.random()*(board.height() -30));
-
-  $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points1"> ');
-  $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points2"> ');
-  $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points3"> ');
-  $("#points1").css({
-    "top": y + "px",
-    "left": x + "px"
-  })
-  $("#points2").css({
-    "top": y1 + "px",
-    "left": x1 + "px"
-  })
-  $("#points2").css({
-    "top": y2 + "px",
-    "left": x2 + "px"
-  })
-
-  var remove1 = setTimeout(function(){
-    $("#points1").remove();
-  },4500);
-  var remove2 = setTimeout(function(){
-    $("#points2").remove();
-  },4500);
-  var remove3 = setTimeout(function(){
-    $("#points3").remove();
-  },4500);
-}
-function addMorePoints() {
-  var x = Math.floor(Math.random()*(board.width() -30));
-  var y = Math.floor(Math.random()*(board.height() -30));
-
-  $(".container").append('<img src="images/money2.png" width="40px" class= "morePoints item" alt=""> ');
-  $(".morePoints").css({
-    "top": y + "px",
-    "left": x + "px"
-  })
-
-  var remove = setTimeout(function(){
-    $(".morePoints").remove();
-  },2000);
-}
-
-function checkSafe() {
-  //Find left and top edge of the player
-  var playerLeft = player.offset().left;
-  var playerTop = player.offset().top;
-
-  //find right and bottom edge of player
-  var playerRight = playerLeft + player.width();
-  var playerBottom = playerTop + player.height();
-
-  checkDiv();
-  checkAlive();
-  checkLives();
-  checkPoints();
-  checkMorePoints();
-
-
-  function checkAlive(){
-    if (lives<0) {
-      $("#lives").html("YOU LOSE");
-      clearIntervals();
-      $("#gameOver").toggle();
-      $("#finalScore").html("You Scored: " + points);
-
-      // alert("Game Over");
-    }
   }
 
-  function checkLives() {
-    if ($(".heart").length != 0 ) {
-      var item = $(".heart");
-      if ( checkItem(item)== 1) {
-        lives+=1;
-        $("#lives").html(lives);
-        $(".heart").remove();
+  function checkSafe() {
+    //Find left and top edge of the player
+    var playerLeft = player.offset().left;
+    var playerTop = player.offset().top;
+
+    //find right and bottom edge of player
+    var playerRight = playerLeft + player.width();
+    var playerBottom = playerTop + player.height();
+
+    checkDiv();
+    checkAlive();
+    checkLives();
+    checkPoints();
+    checkMorePoints();
+
+
+    function checkAlive(){
+      if (lives<0) {
+        $("#lives").html("YOU LOSE");
+        clearIntervals();
+        $("#gameOver").toggle();
+        $("#finalScore").html("You Scored: " + points);
+        highscore.push(points);
+        var best = highscore.sort(function(a, b){return b-a})[0];
+        $("#highscore").html(best)
+
+        // alert("Game Over");
       }
     }
-  }
 
-  function checkDiv() {
-    if ($(".newdiv").width() > 5) {
-      var item = $(".newdiv");
-      if ( checkItem(item)== 1) {
-        points+=1;
-        $("#points").html(points);
+    function checkLives() {
+      if ($(".heart").length != 0 ) {
+        var item = $(".heart");
+        if ( checkItem(item)== 1) {
+          lives+=1;
+          $("#lives").html(lives);
+          $(".heart").remove();
+        }
+      }
+    }
+
+    function checkDiv() {
+      if ($(".newdiv").width() > 5) {
+        var item = $(".newdiv");
+        if ( checkItem(item)== 1) {
+          points+=1;
+          $("#points").html(points);
+          $(".newdiv").remove();
+        }
+      }else if ($(".newdiv").width() < 5 ) {
+        lives-=1;
+        $("#lives").html(lives);
         $(".newdiv").remove();
       }
-    }else if ($(".newdiv").width() < 5 ) {
-      lives-=1;
-      $("#lives").html(lives);
-      $(".newdiv").remove();
     }
-  }
 
-  function checkPoints(){
-    if ($("#points1").length != 0 ) {
-      var item = $("#points1");
-      if (checkItem(item) == 1) {
-        points+=1;
-        $("#points").html(points);
-        $("#points1").remove();
+    function checkPoints(){
+      if ($("#points1").length != 0 ) {
+        var item = $("#points1");
+        if (checkItem(item) == 1) {
+          points+=1;
+          $("#points").html(points);
+          $("#points1").remove();
+        }
+      }
+      if ($("#points2").length != 0 ) {
+        var item = $("#points2");
+        if (checkItem(item) == 1) {
+          points+=1;
+          $("#points").html(points);
+          $("#points2").remove();
+        }
+      }
+      if ($("#points3").length != 0 ) {
+        var item = $("#points3");
+        if (checkItem(item) == 1) {
+          points+=1;
+          $("#points").html(points);
+          $("#points3").remove();
+        }
       }
     }
-    if ($("#points2").length != 0 ) {
-      var item = $("#points2");
-      if (checkItem(item) == 1) {
-        points+=1;
-        $("#points").html(points);
-        $("#points2").remove();
+
+    function checkMorePoints() {
+      if ($(".morePoints").length != 0 ) {
+        var item = $(".morePoints");
+        if (checkItem(item) == 1) {
+          points+=5;
+          $("#points").html(points);
+          $(".morePoints").remove();
+        }
       }
     }
-    if ($("#points3").length != 0 ) {
-      var item = $("#points3");
-      if (checkItem(item) == 1) {
-        points+=1;
-        $("#points").html(points);
-        $("#points3").remove();
-      }
-    }
-  }
 
-  function checkMorePoints() {
-    if ($(".morePoints").length != 0 ) {
-      var item = $(".morePoints");
-      if (checkItem(item) == 1) {
-        points+=5;
-        $("#points").html(points);
-        $(".morePoints").remove();
-      }
-    }
-  }
+    function checkItem(item){
 
-  function checkItem(item){
+      var itemLeft = item.offset().left;
+      var itemTop = item.offset().top;
 
-    var itemLeft = item.offset().left;
-    var itemTop = item.offset().top;
+      //find bottom and right edge of random item
+      var itemRight = itemLeft + item.width();
+      var itemBottom = itemTop + item.height();
 
-    //find bottom and right edge of random item
-    var itemRight = itemLeft + item.width();
-    var itemBottom = itemTop + item.height();
+      if ((itemTop<=playerTop && playerTop<=itemBottom) ) {
 
-    if ((itemTop<=playerTop && playerTop<=itemBottom) ) {
-
-      //finds if the left or the left or right edge of the item are in the zone.
-
-      if (itemLeft<=playerRight && playerRight<=itemRight) {
-        return 1;
-
-      }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
-        return 1;
-      }
-
-      // finds if you've entered random item from the top up
-    }else if ((itemTop<=playerBottom && playerBottom<=itemBottom) ) {
-
-      //finds if the left or the left or right edge of the item are in the zone.
-      if (itemLeft<=playerRight && playerRight<=itemRight) {
-
-        return 1;
-
-      }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
-
-        return 1;
-      }else if (itemTop>=playerTop && itemBottom<=playerBottom) {
+        //finds if the left or the left or right edge of the item are in the zone.
 
         if (itemLeft<=playerRight && playerRight<=itemRight) {
           return 1;
 
         }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
+          return 1;
+        }
+
+        // finds if you've entered random item from the top up
+      }else if ((itemTop<=playerBottom && playerBottom<=itemBottom) ) {
+
+        //finds if the left or the left or right edge of the item are in the zone.
+        if (itemLeft<=playerRight && playerRight<=itemRight) {
 
           return 1;
+
+        }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
+
+          return 1;
+        }else if (itemTop>=playerTop && itemBottom<=playerBottom) {
+
+          if (itemLeft<=playerRight && playerRight<=itemRight) {
+            return 1;
+
+          }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
+
+            return 1;
+          }
         }
       }
     }
   }
-}
-
 
 });
