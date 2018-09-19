@@ -11,7 +11,7 @@ body{
   text-align: center;
   background-color: rgb(214, 168, 219,0.5);
   font-family: 'Russo One', sans-serif;
-  color: hotpink;
+  color: yellow;
   background-image: url(../images/space-bg4.jpg);
   background-size: cover;
   font-size: 1.5em;
@@ -21,7 +21,7 @@ main{
   /* height: 100vh; */
 }
 .title{
-  color: hotpink;
+  color: yellow;
   font-size: 3em;
 
 	text-shadow:
@@ -39,7 +39,7 @@ main{
   background-size: cover;
   margin: 5% auto;
   position: relative;
-  border: solid 5px hotpink;
+  border: solid 5px yellow;
   margin-top: 10px;
   margin-bottom: 0;
 }
@@ -56,7 +56,7 @@ main{
 }
 
 .newdiv{
-  background-color: rgb(96, 164, 247,0.8);
+  background-color: rgb(96, 164, 247,0.6);
   border: solid 1px white;
   height: 80px;
   width: 80px;
@@ -75,14 +75,16 @@ main{
   position: absolute;
 }
 #info{
-  background:linear-gradient(rgb(128,128,128,0.3), rgb(128,128,128,0.3)), url(../images/space-bg.png);
-  background-size: cover;
+  background:linear-gradient(rgb(128,128,128,0.3),
+   rgb(128,128,128,0.3)), url(../images/space-bg.png);
+   /* background-image: linear-gradient(rgb(128,128,128,0.3); */
+  /* background-size: cover; */
   height: 100%;
   font-size: 0.9em;
   width: 100%;
   z-index: 9;
   position: absolute;
-  color: hotpink;
+  color: yellow;
   font-family: 'M PLUS 1p', sans-serif;
   overflow: scroll;
   text-shadow:
@@ -93,11 +95,21 @@ main{
 }
 
 #gameOver{
+  display: flex;
+  align-items: center;
+  background-image: url(../images/space-bg.png);
   height: 100%;
   width: 100%;
   z-index: 10;
   position: absolute;
-  background-color: red;
+  flex-direction: column;
+  font-family: 'Russo One', sans-serif;
+  justify-content: center;
+  text-shadow:
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 .navigation{
   display: flex;
@@ -120,9 +132,9 @@ main{
   border-radius: 10px;
   font-family: 'Russo One', sans-serif;
   background-color: rgb(0,0,0);
-  color: hotpink;
-  border-color: hotpink;
-  letter-spacing: 3px;
+  color: yellow;
+  border-color: yellow;
+  letter-spacing: 2px;
   font-size: .8em;
   /* text-shadow:
     -1px -1px 0 #000,
@@ -157,4 +169,7 @@ main{
 }
 .change{
   padding-left: 10px;
+}
+.item{
+  opacity: 0.8;
 }

@@ -55,6 +55,7 @@ $("#replay").click(function() {
 $("#easy").click(function(){
   $("#info").hide();
   $("#replay").show();
+  $("#gameOver").hide();
   clearBoard();
   clearIntervals();
 
@@ -71,6 +72,7 @@ $("#easy").click(function(){
 $("#hard").click(function(){
   $("#info").hide();
   $("#replay").show();
+  $("#gameOver").hide();
   clearIntervals();
   clearBoard();
 
@@ -83,8 +85,6 @@ $("#hard").click(function(){
   $("#hard").hide();
   $("#easy").show()
 });
-// gameHard();
-// Game();
 
 function Game(){
 
@@ -98,7 +98,7 @@ function Game(){
 
   divRepeat  = setInterval(addDiv,3000);
   checkRepeat = setInterval(checkSafe,10);
-  heartrepeat = setInterval(addLives,4000);
+  heartrepeat = setInterval(addLives,10000);
   moveRepeat = setInterval(movePlayer, 10);
   pointsRepeat = setInterval(addPoints,5000);
 
@@ -129,6 +129,9 @@ function reset(){
     "top": 250 + "px",
     "left": 400 + "px"
   });
+
+  playerXpos = 400;
+  playerYpos = 250;
 
   lives = 3;
   points = 0;
@@ -245,7 +248,7 @@ function addLives() {
     var x = Math.floor(Math.random()*(board.width() -30));
     var y = Math.floor(Math.random()*(board.height() -30));
 
-    $(".container").append('<img src="images/heart.png" width="30px" class= "heart" alt=""> ');
+    $(".container").append('<img src="images/heart.png" width="30px" class= "heart item" alt=""> ');
     $(".heart").css({
       "top": y + "px",
       "left": x + "px"
@@ -266,9 +269,9 @@ function addPoints(){
     var y1 = Math.floor(Math.random()*(board.height() -30));
     var y2 = Math.floor(Math.random()*(board.height() -30));
 
-    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points1"> ');
-    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points2"> ');
-    $(".container").append('<img src="images/money1.png" width="60px" class= "points" alt="" id="points3"> ');
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points1"> ');
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points2"> ');
+    $(".container").append('<img src="images/money3.png" width="40px" class= "points item" alt="" id="points3"> ');
     $("#points1").css({
       "top": y + "px",
       "left": x + "px"
@@ -296,7 +299,7 @@ function addMorePoints() {
   var x = Math.floor(Math.random()*(board.width() -30));
   var y = Math.floor(Math.random()*(board.height() -30));
 
-  $(".container").append('<img src="images/money2.png" width="50px" class= "morePoints" alt=""> ');
+  $(".container").append('<img src="images/money2.png" width="40px" class= "morePoints item" alt=""> ');
   $(".morePoints").css({
     "top": y + "px",
     "left": x + "px"
@@ -331,20 +334,13 @@ function checkSafe() {
       clearInterval(heartrepeat);
       clearInterval(pointsRepeat);
       $("#gameOver").toggle();
+      $("#finalScore").html("You Scored: " + points);
 
       // alert("Game Over");
     }
   }
   function checkLives() {
     if ($(".heart").length != 0 ) {
-      // //Find left and top edge of the player
-      // var playerLeft = player.offset().left;
-      // var playerTop = player.offset().top;
-      //
-      // //find right and bottom edge of player
-      // var playerRight = playerLeft + player.width();
-      // var playerBottom = playerTop + player.height();
-
 
       //find left and top edge of random div
       var heartLeft = $(".heart").offset().left;
