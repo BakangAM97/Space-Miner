@@ -194,3 +194,16 @@ main{
   flex: 3;
   letter-spacing: 2px;
 }
+
+@media (max-width:820px) {
+  .container, .navigation{
+    width: 95%;
+  }
+}
+@media (max-width:550px) {
+  .container{
+    background-image: url(../images/bg3flip.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

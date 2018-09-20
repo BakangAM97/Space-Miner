@@ -14,9 +14,8 @@ $(document).ready(function(){
   var speed = 2.5;
 
   //Setting Starting Position
-  var playerXpos = 400;
-  var playerYpos = 250;
-
+  var playerXpos = board.width()/2;
+  var playerYpos = board.height()/2;
 
   var keyPress=[];
 
@@ -92,6 +91,7 @@ $(document).ready(function(){
   });
 
   function Game(){
+    $(".player").show();
 
     speed = 2.5;
 
@@ -110,6 +110,7 @@ $(document).ready(function(){
     }
 
   function gameHard(){
+    $(".player").show();
 
     var speed = 1;
 
@@ -165,13 +166,15 @@ $(document).ready(function(){
     $(".newdiv").remove();
     $(".morePoints").remove();
 
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    });
+    $(".player").hide();
 
-    playerXpos = 400;
-    playerYpos = 250;
+    playerXpos = board.width()/2;
+    playerYpos = board.height()/2;
+
+    player.css({
+      "top": playerXpos + "px",
+      "left": playerYpos+ "px"
+    });
 
     lives = 3;
     points = 0;
