@@ -55,11 +55,17 @@ $(document).ready(function(){
 
   //Replay button
   $("#replay").click(function() {
+
+    clicksound.play();
+
     reset();
     $("#gameOver").hide();
   });
 
   $("#easy").click(function(){
+
+    clicksound.play();
+
     $("#info").hide();
     $("#replay").show();
     $("#gameOver").hide();
@@ -80,6 +86,9 @@ $(document).ready(function(){
   });
 
   $("#hard").click(function(){
+
+    clicksound.play();
+
     $("#info").hide();
     $("#replay").show();
     $("#gameOver").hide();
@@ -324,8 +333,11 @@ $(document).ready(function(){
   }
 
   var popSound = new  sound("sounds/pop.mp3");
-  var heartSound = new sound("sounds/heartsound.mp3")
-  var zoneSound = new sound("sounds/zonesound.mp3")
+  var heartSound = new sound("sounds/heartsound.mp3");
+  var zoneSound = new sound("sounds/zonesound.mp3");
+  var gameoversound = new sound("sounds/gameover2.mp3");
+  var clicksound = new sound("sounds/buttonclick.mp3")
+
 
   function checkSafe() {
     //Find left and top edge of the player
@@ -345,6 +357,7 @@ $(document).ready(function(){
 
     function checkAlive(){
       if (lives<0) {
+        gameoversound.play();
         $("#lives").html("YOU LOSE");
         clearIntervals();
         $("#gameOver").toggle();
