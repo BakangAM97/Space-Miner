@@ -323,6 +323,10 @@ $(document).ready(function(){
     },2000);
   }
 
+  var popSound = new  sound("sounds/pop.mp3");
+  var heartSound = new sound("sounds/heartsound.mp3")
+  var zoneSound = new sound("sounds/zonesound.mp3")
+
   function checkSafe() {
     //Find left and top edge of the player
     var playerLeft = player.offset().left;
@@ -357,6 +361,7 @@ $(document).ready(function(){
       if ($(".heart").length != 0 ) {
         var item = $(".heart");
         if ( checkItem(item)== 1) {
+          heartSound.play();
           lives+=1;
           $("#lives").html(lives);
           $(".heart").remove();
@@ -368,6 +373,7 @@ $(document).ready(function(){
       if ($(".newdiv").width() > 5) {
         var item = $(".newdiv");
         if ( checkItem(item)== 1) {
+          zoneSound.play();
           points+=1;
           $("#points").html(points);
           $(".newdiv").remove();
@@ -384,6 +390,7 @@ $(document).ready(function(){
         var item = $("#points1");
         if (checkItem(item) == 1) {
           points+=1;
+          popSound.play();
           $("#points").html(points);
           $("#points1").remove();
         }
@@ -392,6 +399,7 @@ $(document).ready(function(){
         var item = $("#points2");
         if (checkItem(item) == 1) {
           points+=1;
+          popSound.play();
           $("#points").html(points);
           $("#points2").remove();
         }
@@ -400,6 +408,7 @@ $(document).ready(function(){
         var item = $("#points3");
         if (checkItem(item) == 1) {
           points+=1;
+          popSound.play();
           $("#points").html(points);
           $("#points3").remove();
         }
@@ -410,6 +419,7 @@ $(document).ready(function(){
       if ($(".morePoints").length != 0 ) {
         var item = $(".morePoints");
         if (checkItem(item) == 1) {
+          popSound.play();
           points+=5;
           $("#points").html(points);
           $(".morePoints").remove();
@@ -460,6 +470,24 @@ $(document).ready(function(){
         }
       }
     }
+
   }
+  function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    }
+    this.stop = function(){
+      this.sound.pause();
+    }
+
+  }
+
+
 
 });
