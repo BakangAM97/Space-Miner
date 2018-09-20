@@ -38,14 +38,6 @@ $(document).ready(function(){
   $("#lives").html(lives);
   $("#points").html(points);
 
-  //Find left and top edge of the board
-  var boardLeft = board.offset().left;
-  var boardTop = board.offset().top;
-
-  //find right and bottom edge of board
-  var boardRight = boardLeft + board.width();
-  var boardBottom = boardTop + board.height();
-
   $(document).keydown(function(event){
     keyPress[event.which] = true;
   })
@@ -69,20 +61,15 @@ $(document).ready(function(){
     $("#info").hide();
     $("#replay").show();
     $("#gameOver").hide();
+    $("#easy").hide();
+    $("#hard").show();
 
     clearTimeout(modeHard);
+    modeEasy = setTimeout(Game, 2500);
 
     clearBoard();
     clearIntervals();
 
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    })
-    // Game();
-    modeEasy = setTimeout(Game, 2500);
-    $("#easy").hide();
-    $("#hard").show()
   });
 
   $("#hard").click(function(){
@@ -92,20 +79,16 @@ $(document).ready(function(){
     $("#info").hide();
     $("#replay").show();
     $("#gameOver").hide();
+    $("#hard").hide();
+    $("#easy").show();
 
     clearTimeout(modeEasy)
+    modeHard = setTimeout(gameHard, 2500);
 
     clearIntervals();
     clearBoard();
 
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    })
 
-    modeHard = setTimeout(gameHard, 2500);
-    $("#hard").hide();
-    $("#easy").show()
   });
 
   function Game(){
@@ -134,6 +117,7 @@ $(document).ready(function(){
     checkSafe();
     addDiv();
     addMorePoints();
+    addPoints();
 
 
     divRepeat  = setInterval(addDiv,3000);
@@ -147,20 +131,6 @@ $(document).ready(function(){
 
   function reset(){
 
-    player.css({
-      "top": 250 + "px",
-      "left": 400 + "px"
-    });
-
-    playerXpos = 400;
-    playerYpos = 250;
-
-    lives = 3;
-    points = 0;
-
-    $("#lives").html(lives);
-    $("#points").html(points);
-
     clearTimeout(restartHard);
     clearTimeout(restartEasy);
     clearIntervals();
@@ -173,8 +143,6 @@ $(document).ready(function(){
     }else if ($("#hard").is(":hidden")) {
 
       restartHard = setTimeout(gameHard,2000);
-
-    }else {
 
     }
 
@@ -196,11 +164,32 @@ $(document).ready(function(){
     $("#points3").remove();
     $(".newdiv").remove();
     $(".morePoints").remove();
+
+    player.css({
+      "top": 250 + "px",
+      "left": 400 + "px"
+    });
+
+    playerXpos = 400;
+    playerYpos = 250;
+
+    lives = 3;
+    points = 0;
+
+    $("#lives").html(lives);
+    $("#points").html(points);
+
   }
 
   function movePlayer() {
 
+    //Find left and top edge of the board
+    var boardLeft = board.offset().left;
+    var boardTop = board.offset().top;
 
+    //find right and bottom edge of board
+    var boardRight = boardLeft + board.width();
+    var boardBottom = boardTop + board.height();
 
     //Find left and top edge of the player
     var playerLeft = player.offset().left;
@@ -332,11 +321,11 @@ $(document).ready(function(){
     },2000);
   }
 
-  var popSound = new  sound("sounds/pop.mp3");
-  var heartSound = new sound("sounds/heartsound.mp3");
-  var zoneSound = new sound("sounds/zonesound.mp3");
-  var gameoversound = new sound("sounds/gameover2.mp3");
-  var clicksound = new sound("sounds/buttonclick.mp3")
+  var popSound = new  Audio("sounds/pop.mp3");
+  var heartSound = new Audio("sounds/heartsound.mp3");
+  var zoneSound = new Audio("sounds/zonesound.mp3");
+  var gameoversound = new Audio("sounds/gameover2.mp3");
+  var clicksound = new Audio("sounds/buttonclick.mp3")
 
 
   function checkSafe() {
@@ -471,35 +460,21 @@ $(document).ready(function(){
         }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
 
           return 1;
-        }else if (itemTop>=playerTop && itemBottom<=playerBottom) {
+        }
+      }else if (itemTop>=playerTop && itemBottom<=playerBottom) {
 
-          if (itemLeft<=playerRight && playerRight<=itemRight) {
-            return 1;
+        if (itemLeft<=playerRight && playerRight<=itemRight) {
+          return 1;
 
-          }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
+        }else if (itemLeft<=playerLeft && playerLeft<=itemRight) {
 
-            return 1;
-          }
+          return 1;
         }
       }
     }
 
   }
-  function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function(){
-      this.sound.play();
-    }
-    this.stop = function(){
-      this.sound.pause();
-    }
 
-  }
 
 
 
