@@ -102,8 +102,8 @@ $(document).ready(function(){
     addLives();
 
     divRepeat  = setInterval(addDiv,3000);
-    checkRepeat = setInterval(checkSafe,1);
-    heartrepeat = setInterval(addLives,10000);
+    checkRepeat = setInterval(checkSafe,10);
+    heartrepeat = setInterval(addLives,7000);
     moveRepeat = setInterval(movePlayer, 10);
     pointsRepeat = setInterval(addPoints,5000);
 
@@ -301,13 +301,13 @@ $(document).ready(function(){
 
     var remove1 = setTimeout(function(){
       $("#points1").remove();
-    },4500);
+    },2500);
     var remove2 = setTimeout(function(){
       $("#points2").remove();
-    },4500);
+    },4000);
     var remove3 = setTimeout(function(){
       $("#points3").remove();
-    },4500);
+    },4800);
   }
   function addMorePoints() {
     var x = Math.floor(Math.random()*(board.width() -30));
@@ -394,7 +394,7 @@ $(document).ready(function(){
       if ($("#points1").length != 0 ) {
         var item = $("#points1");
         if (checkItem(item) == 1) {
-          points+=1;
+          points+=2;
           popSound.play();
           $("#points").html(points);
           $("#points1").remove();
@@ -403,7 +403,7 @@ $(document).ready(function(){
       if ($("#points2").length != 0 ) {
         var item = $("#points2");
         if (checkItem(item) == 1) {
-          points+=1;
+          points+=2;
           popSound.play();
           $("#points").html(points);
           $("#points2").remove();
@@ -412,7 +412,7 @@ $(document).ready(function(){
       if ($("#points3").length != 0 ) {
         var item = $("#points3");
         if (checkItem(item) == 1) {
-          points+=1;
+          points+=2;
           popSound.play();
           $("#points").html(points);
           $("#points3").remove();
