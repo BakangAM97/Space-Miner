@@ -1,9 +1,12 @@
 # Game Project: SPACE MINER
 ### By Bakang Morwaagole
 
-Space Miner is a fun space themed survival game. The aim of the game is fly around space, rushing to the safe zone while collecting as many points as you can. The game can be played 
- <a href ="https://bakangam97.github.io/SpartaGame.BakangAM97.github.io/"> here </a>.  The repositostry can be cloned and worked on by clicking
- <button style="background-color: #28a745; color:white; background-image: linear-gradient(-180deg,#34d058 0%,#28a745 90%);padding: 3px 10px; font-size: 12px; line-height: 20px;     border: 1px solid rgba(27,31,35,0.2); border-radius: 0.25em; background-repeat:repeat-x;background-position: -1px -1px;">Clone or download</button>
+Space Miner is a fun space themed survival game which I made using HTML, CSS, and JavaScript. The aim of the game is fly around space, rushing to the safe zone while collecting as many points as you can. The game can be played 
+ <a href ="https://bakangam97.github.io/SpartaGame.BakangAM97.github.io/"> here </a>.  The repositostry can be cloned and worked on by clicking the button
+ 
+ <img src = "images/clone-button.png" style = "height: 30px; margin-left: 10px; margin-right:10px;"> 
+ 
+ on the repository homepage. 
 
  
 ## How to Play
@@ -13,7 +16,7 @@ When you open the game you'll be presented with this page. Here you will find in
 <img src = "images/intro-page.png">
 
 
-When you start the game you can control the astronaut by using the arrow keys to fly around the screen. 
+When you start the game you control the astronaut by using the arrow keys to fly around the screen to collect points and get to the safe zone in time. 
 
 <img src = "images/game-play.png">
 
@@ -35,6 +38,12 @@ _Hard Mode_:
 In hard mode the aim is the same, however you won't be alble to collect lives. 
 
 ## Development Process 
+
+The first challenge in developing my game was to create smooth character movement. To achieve this I created an array that stored the value whether an arrow key was being pressed down or not. I then created a function on an interval that checked whether an arrow key was pressed and moved the player accordingly. 
+
+
+The second challenge was to find an efficient way to track the collisions of the player. I solved this by creating a function that could take elements on the page as input and return the value of 1 if the player was colliding with it in any way. 
+ 
 
 ## Future Developments
 
