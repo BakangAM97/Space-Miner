@@ -23,11 +23,20 @@ _Easy Mode_:
 
 In easy mode the aim of the game is to survive by getting to the safe area before it disappears. If you don't make it in time you'll have lose a life and when you run out of lives, you lose the game. 
  
-<img src = "images/heart.png" style = "height:50px; margin-left:auto; margin-right:auto;">
- <!-- <img src = "images/safezone.png" style = "height:36px;">
-  <img src = "images/money3.png" style = "height:42px;"-->
-  
+
 * Getting to the safe zone in time will gain you one point. 
 
-* Collecting coins along the way 
+* Collecting coins along the way gains you 2 points
+
+* If you manage to collect obtain 5 lives, money bags will spawn instead, gaining you five points
+
+_Hard Mode_:
+
+In hard mode the aim is the same, however you won't be alble to collect lives. 
+
+## Development Process 
+
+## Future Developments
+
+In the future I aim to make my game playable on mobile devices. 
  
