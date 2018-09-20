@@ -352,6 +352,7 @@ $(document).ready(function(){
         gameoversound.play();
         $("#lives").html("YOU LOSE");
         clearIntervals();
+        $(".player").show();
         $("#gameOver").toggle();
         $("#finalScore").html("You Scored: " + points);
         highscore.push(points);

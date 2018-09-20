@@ -3,8 +3,8 @@
 
 Space Miner is a fun space themed survival game. The aim of the game is fly around space, rushing to the safe zone while collecting as many points as you can. The game can be played 
  <a href ="https://bakangam97.github.io/SpartaGame.BakangAM97.github.io/"> here </a>.  The repositostry can be cloned and worked on by clicking
-<a>  <button style="background-color: #28a745; color:white; background-image: linear-gradient(-180deg,#34d058 0%,#28a745 90%);padding: 3px 10px; font-size: 12px; line-height: 20px;     border: 1px solid rgba(27,31,35,0.2); border-radius: 0.25em; background-repeat:repeat-x;background-position: -1px -1px;">Clone or download</button>
-</a>
+ <button style="background-color: #28a745; color:white; background-image: linear-gradient(-180deg,#34d058 0%,#28a745 90%);padding: 3px 10px; font-size: 12px; line-height: 20px;     border: 1px solid rgba(27,31,35,0.2); border-radius: 0.25em; background-repeat:repeat-x;background-position: -1px -1px;">Clone or download</button>
+
  
 ## How to Play
 
