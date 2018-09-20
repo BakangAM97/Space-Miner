@@ -93,7 +93,7 @@ $(document).ready(function(){
   function Game(){
     $(".player").show();
 
-    speed = 2.5;
+    speed = 2;
 
     movePlayer();
     checkSafe();
@@ -112,7 +112,7 @@ $(document).ready(function(){
   function gameHard(){
     $(".player").show();
 
-    var speed = 1;
+    var speed = 2.2;
 
     movePlayer();
     checkSafe();
@@ -121,7 +121,7 @@ $(document).ready(function(){
     addPoints();
 
 
-    divRepeat  = setInterval(addDiv,3000);
+    divRepeat  = setInterval(addDiv,2300);
     checkRepeat = setInterval(checkSafe,10);
     moveRepeat = setInterval(movePlayer, 10);
     pointsRepeat = setInterval(addPoints,3000);
@@ -253,7 +253,7 @@ $(document).ready(function(){
 
     var remove = setTimeout(function(){
       $(".newdiv").remove();
-    },2500);
+    },2000);
 
   }
   function addLives() {
