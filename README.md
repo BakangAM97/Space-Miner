@@ -23,6 +23,11 @@ _Easy Mode_:
 
 In easy mode the aim of the game is to survive by getting to the safe area before it disappears. If you don't make it in time you'll have lose a life and when you run out of lives, you lose the game. 
  
-* dad
-* 
+<img src = "images/heart.png" style = "height:50px; margin-left:auto; margin-right:auto;">
+ <!-- <img src = "images/safezone.png" style = "height:36px;">
+  <img src = "images/money3.png" style = "height:42px;"-->
+  
+* Getting to the safe zone in time will gain you one point. 
+
+* Collecting coins along the way 
  
