@@ -1,24 +1,25 @@
 $(document).ready(function(){
 
+  //Hiding game over page and replay button
   $("#gameOver").hide();
   $("#replay").hide();
-  // $("#info").hide();
 
-  //Setting up variables
   var player = $(".player");
   var board = $(".container");
-  var lifeCounter = $("lifeCounter")
+  var lifeCounter = $("lifeCounter");
 
   var points = 0;
   var lives = 3;
-  var speed = 2.5;
+  var speed;
+  var keyPress=[];
+  var highscore=[];
 
   //Setting Starting Position
   var playerXpos = board.width()/2;
   var playerYpos = board.height()/2;
 
-  var keyPress=[];
 
+  //Setting variables for intervals
   var divRepeat;
   var checkRepeat;
   var heartrepeat;
@@ -26,25 +27,23 @@ $(document).ready(function(){
   var pointsRepeat;
   var morePointsRepeat;
 
+  //Setting variables for timeouts
   var restartHard;
   var restartEasy;
   var modeEasy;
   var modeHard;
-
-  var highscore=[];
-
 
   $("#lives").html(lives);
   $("#points").html(points);
 
   $(document).keydown(function(event){
     keyPress[event.which] = true;
-  })
+  });
   $(document).keyup(function(event){
     keyPress[event.which] = false;
-  })
+  });
 
-  //Replay button
+  //Button click events
   $("#replay").click(function() {
 
     clicksound.play();
@@ -81,7 +80,7 @@ $(document).ready(function(){
     $("#hard").hide();
     $("#easy").show();
 
-    clearTimeout(modeEasy)
+    clearTimeout(modeEasy);
     modeHard = setTimeout(gameHard, 2500);
 
     clearIntervals();
@@ -102,12 +101,12 @@ $(document).ready(function(){
     addLives();
 
     divRepeat  = setInterval(addDiv,3000);
-    checkRepeat = setInterval(checkSafe,10);
+    checkRepeat = setInterval(checkSafe,5);
     heartrepeat = setInterval(addLives,7000);
     moveRepeat = setInterval(movePlayer, 10);
     pointsRepeat = setInterval(addPoints,5000);
 
-    }
+  }
 
   function gameHard(){
     $(".player").show();
@@ -127,7 +126,7 @@ $(document).ready(function(){
     pointsRepeat = setInterval(addPoints,3000);
     morePointsRepeat = setInterval(addMorePoints,5000)
 
-    }
+  };
 
 
   function reset(){
@@ -147,7 +146,7 @@ $(document).ready(function(){
 
     }
 
-  }
+  };
 
   function clearIntervals() {
     clearInterval(moveRepeat);
@@ -156,7 +155,7 @@ $(document).ready(function(){
     clearInterval(divRepeat);
     clearInterval(pointsRepeat);
     clearInterval(morePointsRepeat);
-  }
+  };
 
   function clearBoard() {
     $(".heart").remove();
@@ -182,7 +181,7 @@ $(document).ready(function(){
     $("#lives").html(lives);
     $("#points").html(points);
 
-  }
+  };
 
   function movePlayer() {
 
@@ -236,7 +235,7 @@ $(document).ready(function(){
       "top": playerYpos + "px",
       "left": playerXpos + "px"
     })
-  }
+  };
 
   function addDiv() {
     //Generating random x and y positions
@@ -255,7 +254,7 @@ $(document).ready(function(){
       $(".newdiv").remove();
     },2000);
 
-  }
+  };
   function addLives() {
     if (lives<5) {
 
@@ -308,7 +307,7 @@ $(document).ready(function(){
     var remove3 = setTimeout(function(){
       $("#points3").remove();
     },4800);
-  }
+  };
   function addMorePoints() {
     var x = Math.floor(Math.random()*(board.width() -30));
     var y = Math.floor(Math.random()*(board.height() -30));
@@ -322,13 +321,13 @@ $(document).ready(function(){
     var remove = setTimeout(function(){
       $(".morePoints").remove();
     },2000);
-  }
+  };
 
   var popSound = new  Audio("sounds/pop.mp3");
   var heartSound = new Audio("sounds/heartsound.mp3");
   var zoneSound = new Audio("sounds/zonesound.mp3");
   var gameoversound = new Audio("sounds/gameover2.mp3");
-  var clicksound = new Audio("sounds/buttonclick.mp3")
+  var clicksound = new Audio("sounds/buttonclick.mp3");
 
 
   function checkSafe() {
@@ -361,7 +360,7 @@ $(document).ready(function(){
 
         // alert("Game Over");
       }
-    }
+    };
 
     function checkLives() {
       if ($(".heart").length != 0 ) {
@@ -373,7 +372,7 @@ $(document).ready(function(){
           $(".heart").remove();
         }
       }
-    }
+    };
 
     function checkDiv() {
       if ($(".newdiv").width() > 5) {
@@ -389,7 +388,7 @@ $(document).ready(function(){
         $("#lives").html(lives);
         $(".newdiv").remove();
       }
-    }
+    };
 
     function checkPoints(){
       if ($("#points1").length != 0 ) {
@@ -419,7 +418,7 @@ $(document).ready(function(){
           $("#points3").remove();
         }
       }
-    }
+    };
 
     function checkMorePoints() {
       if ($(".morePoints").length != 0 ) {
@@ -431,7 +430,7 @@ $(document).ready(function(){
           $(".morePoints").remove();
         }
       }
-    }
+    };
 
     function checkItem(item){
 
@@ -474,12 +473,18 @@ $(document).ready(function(){
 
           return 1;
         }
+      }else if (itemLeft>=playerLeft && itemRight<=playerRight) {
+
+        if (itemTop<=playerBottom && playerTop<=itemTop) {
+          return 1;
+
+        }else if (itemBottom<=playerBottom && playerTop<=itemBottom) {
+
+          return 1;
+        }
       }
-    }
+    };
 
-  }
-
-
-
+  };
 
 });
