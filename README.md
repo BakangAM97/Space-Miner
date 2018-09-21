@@ -2,7 +2,7 @@
 ### By Bakang Morwaagole
 
 Space Miner is a fun space themed survival game which I made using HTML, CSS, and JavaScript. The aim of the game is to fly around space, rushing to the safe zone while collecting as many points as you can. The game can be played by clicking
- <a href ="https://bakangam97.github.io/SpartaGame.BakangAM97.github.io/"> here </a>.  The repositostry can be cloned and worked on by clicking the button
+ <a href ="https://bakangam97.github.io/Space-Miner/"> here </a>.  The repositostry can be cloned and worked on by clicking the button
 
  <img src = "images/clone-button.png" style = "height: 30px; margin-left: 10px; margin-right:10px;">
 
