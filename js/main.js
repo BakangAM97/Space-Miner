@@ -92,7 +92,7 @@ $(document).ready(function(){
   function Game(){
     $(".player").show();
 
-    speed = 2;
+    speed = 2.5;
 
     movePlayer();
     checkSafe();
@@ -101,7 +101,7 @@ $(document).ready(function(){
     addLives();
 
     divRepeat  = setInterval(addDiv,3000);
-    checkRepeat = setInterval(checkSafe,5);
+    checkRepeat = setInterval(checkSafe,10);
     heartrepeat = setInterval(addLives,7000);
     moveRepeat = setInterval(movePlayer, 10);
     pointsRepeat = setInterval(addPoints,5000);
@@ -269,7 +269,7 @@ $(document).ready(function(){
 
       var remove = setTimeout(function(){
         $(".heart").remove();
-      },2000);
+      },1500);
     } else {
       addMorePoints();
     }
@@ -347,7 +347,7 @@ $(document).ready(function(){
 
 
     function checkAlive(){
-      if (lives<0) {
+      if (lives<1) {
         gameoversound.play();
         $("#lives").html("YOU LOSE");
         clearIntervals();
