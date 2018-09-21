@@ -35,17 +35,17 @@ _Easy Mode_:
 
 * Hearts will spawn allowing you to gain extra lives
 
-* If you manage to obtain 5 lives, money bags will spawn instead, gaining you 5 points
+* If you manage to obtain 5 lives money bags will spawn instead, gaining you 5 points
 
 _Hard Mode_:
 
-* In hard mode the aim is the same, however you won't be able to collect lives
+* In hard mode the aim is the same however you won't be able to collect lives
 
-* Money bags will spawn from the start, giving you the chance to gain more points.
+* Money bags will spawn from the start giving you the chance to gain more points.
 
 ## Development Process
 
-The first challenge in developing my game was to create smooth character movement. To achieve this I created an array that stored which arrow keys were being pressed down. I then created a function that checked what arrow keys were being pressed and moved the player accordingly, which I called repeatedly with an interval.
+The first challenge in developing my game was to create smooth character movement. To achieve this I created an array that stored which arrow keys were being pressed down. I then created a function that moved the player based on what keys were being pressed down, which I then called repeatedly with an interval.
 
 
 The second challenge was to find an efficient way to track the collisions of the player and the items on the board. I solved this by creating a function that could take elements on the page as input and return the value 1 if the player was colliding with it in any way.
