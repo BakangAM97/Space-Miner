@@ -35,7 +35,7 @@ _Easy Mode_:
 
 * Hearts will spawn allowing you to gain extra lives
 
-* If you manage to collect obtain 5 lives, money bags will spawn instead, gaining you 5 points
+* If you manage to obtain 5 lives, money bags will spawn instead, gaining you 5 points
 
 _Hard Mode_:
 
