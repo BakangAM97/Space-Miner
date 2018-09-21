@@ -142,8 +142,10 @@ main{
 }
 .stats{
   display: flex;
-  flex: 7;
+  margin: 0 auto;
+  /* flex: 7; */
   align-content: space-between;
+  width: 500px;
 }
 
 .gamebutton{
