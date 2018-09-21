@@ -351,14 +351,11 @@ $(document).ready(function(){
         gameoversound.play();
         $("#lives").html("YOU LOSE");
         clearIntervals();
-        $(".player").show();
         $("#gameOver").toggle();
         $("#finalScore").html("You Scored: " + points);
         highscore.push(points);
         var best = highscore.sort(function(a, b){return b-a})[0];
         $("#highscore").html(best)
-
-        // alert("Game Over");
       }
     };
 
