@@ -24,7 +24,7 @@ When you start the game, you control the astronaut by using the arrow keys to fl
 
 
 
-In easy mode the aim of the game is to survive by getting to the safe area before it disappears. If you don't make it in time you lose a life and when you run out of lives its Game Over.
+In easy mode the aim of the game is to survive by getting to the safe area before it disappears. If you don't make it in time you lose a life and when you run out of lives it's Game Over.
 
 
 * Getting to the safe zone in time will gain you 1 point.
